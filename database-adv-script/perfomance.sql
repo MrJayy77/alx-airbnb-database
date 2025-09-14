@@ -1,6 +1,4 @@
--- Step 1: Initial complex query to retrieve all bookings 
--- with user details, property details, and payment details
-
+-- Step 1: Original complex query
 SELECT 
     b.id AS booking_id,
     b.booking_date,
@@ -22,7 +20,7 @@ JOIN Property p ON b.property_id = p.id
 LEFT JOIN Payment pay ON b.id = pay.booking_id
 ORDER BY b.booking_date DESC;
 
--- Step 2: Analyze performance of this query
+-- Step 2: Analyze performance
 EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
@@ -45,8 +43,7 @@ JOIN Property p ON b.property_id = p.id
 LEFT JOIN Payment pay ON b.id = pay.booking_id
 ORDER BY b.booking_date DESC;
 
--- Step 3: Refactored query using indexed columns to improve performance
--- (Assumes indexes created in database_index.sql)
+-- Step 3: Refactored query with filtering (uses AND)
 EXPLAIN ANALYZE
 SELECT 
     b.id AS booking_id,
@@ -59,4 +56,5 @@ JOIN User u ON b.user_id = u.id
 JOIN Property p ON b.property_id = p.id
 LEFT JOIN Payment pay ON b.id = pay.booking_id
 WHERE b.booking_date >= '2024-01-01'
+  AND p.city = 'Accra'
 ORDER BY b.booking_date DESC;
