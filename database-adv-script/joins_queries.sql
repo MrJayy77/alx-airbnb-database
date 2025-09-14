@@ -8,7 +8,8 @@ SELECT
     users.email
 FROM bookings
 INNER JOIN users
-    ON bookings.user_id = users.user_id;
+    ON bookings.user_id = users.user_id
+ORDER BY bookings.booking_id;
 
 -- 2️⃣ LEFT JOIN: Get all properties and their reviews (include properties with no reviews)
 SELECT 
@@ -19,10 +20,10 @@ SELECT
     reviews.comment
 FROM properties
 LEFT JOIN reviews
-    ON properties.property_id = reviews.property_id;
+    ON properties.property_id = reviews.property_id
+ORDER BY properties.property_id;
 
--- 3️⃣ FULL OUTER JOIN: Get all users and all bookings
--- (Note: MySQL does NOT support FULL OUTER JOIN directly — use UNION of LEFT + RIGHT)
+-- 3️⃣ FULL OUTER JOIN (simulated): Get all users and all bookings
 SELECT 
     users.user_id,
     users.name AS user_name,
@@ -41,4 +42,5 @@ SELECT
     bookings.booking_date
 FROM users
 RIGHT JOIN bookings
-    ON users.user_id = bookings.user_id;
+    ON users.user_id = bookings.user_id
+ORDER BY user_id;
